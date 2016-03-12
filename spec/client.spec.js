@@ -8,12 +8,13 @@ describe( "Client Specs", () => {
 		describe( "Client Integration Specs", () => {
 			let client = {};
 			let damId = null;
+			let bookId = null;
 
 			before( () => {
 				client = new Client( apiKey );
 			} );
 
-			it( "should get a list of language families", ( done ) => {
+			it( "volumeLanguageFamilyList should get a list of language families", ( done ) => {
 				client.volumeLanguageFamilyList( ( err, res ) => {
 					should.not.exist( err );
 					should.exist( res );
@@ -34,7 +35,7 @@ describe( "Client Specs", () => {
 				} );
 			} );
 
-			it( "should get a list of language families by media", ( done ) => {
+			it( "volumeLanguageFamilyList should get a list of language families by media", ( done ) => {
 				let options = { media: "audio" };
 				client.volumeLanguageFamilyList( options, ( err, res ) => {
 					should.not.exist( err );
@@ -56,7 +57,7 @@ describe( "Client Specs", () => {
 				} );
 			} );
 
-			it( "should get a list of volumes for by language family code 'ENG'", ( done ) => {
+			it( "volumeListing should get a list of volumes for by language family code 'ENG'", ( done ) => {
 				let options = { language_family_code: "ENG" };
 				client.volumeListing( options, ( err, res ) => {
 					should.not.exist( err );
@@ -80,7 +81,7 @@ describe( "Client Specs", () => {
 				} );
 			} );
 
-			it( "should get a list of books by dam_id", ( done ) => {
+			it( "bookListing should get a list of books by dam_id", ( done ) => {
 				should.exist( damId );
 				client.bookListing( damId, ( err, res ) => {
 					should.not.exist( err );
@@ -95,6 +96,30 @@ describe( "Client Specs", () => {
 					book.should.have.property( "book_order" );
 					book.should.have.property( "number_of_chapters" );
 					book.should.have.property( "chapters" );
+					bookId = book.book_id;
+					done();
+				} );
+			} );
+
+			it( "verse should get the text for a given book, chapter, and verse", ( done ) => {
+				should.exist( damId );
+				should.exist( bookId );
+				const options = { book_id: bookId, chapter_id: 1, verse_start: 1, verse_end: 1 };
+				client.verse( "ENGESVN2ET", options, ( err, res ) => {
+					should.not.exist( err );
+					should.exist( res );
+					// console.log( res );
+					res.should.be.instanceOf( Array );
+					res.length.should.be.equal( 1 );
+					let verse = res[ 0 ];
+					verse.should.have.property( "book_name" );
+					verse.should.have.property( "book_id" ).that.is.equal( bookId );
+					verse.should.have.property( "book_order" );
+					verse.should.have.property( "chapter_id" );
+					verse.should.have.property( "chapter_title" );
+					verse.should.have.property( "verse_id" );
+					verse.should.have.property( "verse_text" );
+					verse.should.have.property( "paragraph_number" );
 					done();
 				} );
 			} );

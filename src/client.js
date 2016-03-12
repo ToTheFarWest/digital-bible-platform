@@ -54,4 +54,16 @@ export default class Client {
 		const path = `library/book?dam_id=${damId}`;
 		this._get( path, callback );
 	}
+
+	verse( damId, options, callback ) {
+		const defaults = { book_id: "", chapter_id: "", verse_start: "", verse_end: "", markup: "" };
+		if ( typeof options === "function" ) {
+			callback = options;
+			options = {};
+		}
+		options.dam_id = damId;
+		const params = optionsToParams( options, defaults );
+		const path = "text/verse?" + params.join( "&" );
+		this._get( path, callback );
+	}
 }
