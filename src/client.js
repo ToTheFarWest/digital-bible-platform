@@ -19,13 +19,25 @@ export default class Client {
 	}
 
 	// http://dbt.io/library/volumelanguagefamily?key={API-Key}&media=audio&v=2
-	languageFamilies( media, callback ) {
-		if ( typeof media === "function" ) {
-			callback = media;
-			media = null;
+	volumeLanguageFamilyList( options, callback ) {
+		const defaultOptions = { media: "", root: "", full_word: false, language_code: "", delivery: "", status: "", resolution: "", organization_id: "" };
+		if ( typeof options === "function" ) {
+			callback = options;
+			options = {};
 		}
+		Object.assign( options, defaultOptions );
+		// console.log( options );
+		let params = [];
+		Object.keys( options ).forEach( ( key ) => {
+			if ( options[key] ) {
+				params.push( `${key}=${options[key]}` );
+			}
+		} );
 
-		const path = media ? `library/volumelanguagefamily?media=${media}` : "library/volumelanguagefamily";
+		const path = ( params.length === 0 ) ? "library/volumelanguagefamily" : "library/volumelanguagefamily?" + params.join( "&" );
+
+		// console.log( "path:", path );
+
 		this.client.get( path, ( err, res, body ) => {
 			callback( err, body );
 		} );

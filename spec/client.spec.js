@@ -15,9 +15,10 @@ describe( "Client Specs", () => {
 			} );
 
 			it( "should get a list of language families", ( done ) => {
-				client.languageFamilies( ( err, res ) => {
+				client.volumeLanguageFamilyList( ( err, res ) => {
 					should.not.exist( err );
 					should.exist( res );
+					// console.log( res );
 					res.should.be.instanceOf( Array );
 					res.length.should.be.above( 0 );
 					let language = res[ 0 ];
