@@ -80,7 +80,7 @@ describe( "Client Specs", () => {
 				} );
 			} );
 
-			it( "volumeListing should get a volumen by dam_id", ( done ) => {
+			it( "volumeListing should get a volume by dam_id", ( done ) => {
 				let options = { dam_id: DAM_ID };
 				client.volumeListing( options, ( err, res ) => {
 					should.not.exist( err );
@@ -118,6 +118,26 @@ describe( "Client Specs", () => {
 					book.should.have.property( "number_of_chapters" );
 					book.should.have.property( "chapters" );
 					bookId = book.book_id;
+					done();
+				} );
+			} );
+
+			it( "verse should get the text for entire given bible", ( done ) => {
+				client.verse( DAM_ID, ( err, res ) => {
+					should.not.exist( err );
+					should.exist( res );
+					// console.log( res );
+					res.should.be.instanceOf( Array );
+					res.length.should.be.above( 1 );
+					let verse = res[ 0 ];
+					verse.should.have.property( "book_name" );
+					verse.should.have.property( "book_id" ).that.is.equal( bookId );
+					verse.should.have.property( "book_order" );
+					verse.should.have.property( "chapter_id" );
+					verse.should.have.property( "chapter_title" );
+					verse.should.have.property( "verse_id" );
+					verse.should.have.property( "verse_text" );
+					verse.should.have.property( "paragraph_number" );
 					done();
 				} );
 			} );

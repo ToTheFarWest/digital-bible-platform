@@ -61,6 +61,7 @@ export default class Client {
 			callback = options;
 			options = {};
 		}
+		options = options || {};
 		options.dam_id = damId;
 		const params = optionsToParams( options, defaults );
 		const path = "text/verse?" + params.join( "&" );
