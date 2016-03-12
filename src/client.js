@@ -1,29 +1,31 @@
-import request from "request";
+const reqwest = require( "reqwest" );
 import { optionsToParams } from "./utils";
 
 export default class Client {
 	constructor( apiKey, options ) {
 		this.apiKey = apiKey;
 		this.options = options || {};
-		if ( !this.options.baseUrl && !this.options.uri && !this.options.url ) {
+		if ( !this.options.baseUrl ) {
 			this.options.baseUrl = "http://dbt.io/";
 		}
-		this.options.qs = {
-			key: apiKey,
-			v: 2
-		};
-		this.options.json = true;
-		if ( this.options.proxy ) {
-			process.env[ "NODE_TLS_REJECT_UNAUTHORIZED" ] = "0";
-		}
-		this.client = request.defaults( this.options );
 	}
 
 	_get( path, callback ) {
 		// console.log( path );
-		this.client.get( path, ( err, res, body ) => {
-			callback( err, body );
-		} );
+		const url = ( path.indexOf( "?" ) > -1 ) ? `${this.options.baseUrl}${path}&key=${this.apiKey}&v=2`
+			: `${this.options.baseUrl}${path}?key=${this.apiKey}&v=2`;
+
+		reqwest( {
+			url: url,
+			type: "json",
+			method: "get"
+		} )
+			.then( ( res ) => {
+				callback( null, res );
+			} )
+			.catch( ( err ) => {
+				callback( err );
+			} );
 	}
 
 	languages( options, callback ) {
@@ -91,10 +93,9 @@ export default class Client {
 	}
 
 	textSearch( damId, options, callback ) {
-		const defaults = { reply: "json", callback: "", echo: false, query: "",  book_id: "", offset: 0, limit: 50 };
-		if ( typeof options === "function" ) {
-			callback = options;
-			options = {};
+		const defaults = { reply: "json", callback: "", echo: false, query: "", book_id: "", offset: 0, limit: 50 };
+		if ( options === null || typeof options === "function" ) {
+			return callback( new Error( "options required for textSearch()" ) );
 		}
 		options = options || {};
 		options.dam_id = damId;
