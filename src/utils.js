@@ -3,7 +3,7 @@ const optionsToParams = ( options, defaults ) => {
 	Object.assign( opt, defaults, options );
 	let params = [];
 	Object.keys( opt ).forEach( ( key ) => {
-		if ( opt[key] ) {
+		if ( opt[key] || typeof opt[key] === "boolean" ) {
 			params.push( `${key}=${opt[key]}` );
 		}
 	} );
