@@ -273,6 +273,20 @@ describe( "Client Specs", function() {
 					done();
 				} );
 			} );
+
+			//
+
+			it( "textSearch should get search results", ( done ) => {
+				const options = { reply: "json", callback: "", echo: false, query: "walk",  book_id: "", offset: 0, limit: 50 };
+				client.textSearch( DAM_ID, options, ( err, res ) => {
+					should.not.exist( err );
+					should.exist( res );
+					// console.log( res );
+					res.should.be.instanceOf( Array );
+					res.length.should.be.equal( 2 );
+					done();
+				} );
+			} );
 		} );
 	}
 } );

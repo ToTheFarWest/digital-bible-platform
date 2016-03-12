@@ -89,4 +89,17 @@ export default class Client {
 		const path = "text/verse?" + params.join( "&" );
 		this._get( path, callback );
 	}
+
+	textSearch( damId, options, callback ) {
+		const defaults = { reply: "json", callback: "", echo: false, query: "",  book_id: "", offset: 0, limit: 50 };
+		if ( typeof options === "function" ) {
+			callback = options;
+			options = {};
+		}
+		options = options || {};
+		options.dam_id = damId;
+		const params = optionsToParams( options, defaults );
+		const path = ( params.length === 0 ) ? "text/search" : "text/search?" + params.join( "&" );
+		this._get( path, callback );
+	}
 }
