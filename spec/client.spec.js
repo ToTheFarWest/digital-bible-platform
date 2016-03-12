@@ -5,9 +5,9 @@ describe( "Client Specs", () => {
 	let runIntegrationSpecs = !!apiKey;
 
 	if ( runIntegrationSpecs ) {
-		describe( "Client Integration Specs", () => {
+		describe( "Integration Specs", () => {
 			let client = {};
-			let damId = null;
+			const DAM_ID = "ENGESVN2ET"; // ESV New Testament, text
 			let bookId = null;
 
 			before( () => {
@@ -70,7 +70,29 @@ describe( "Client Specs", () => {
 					let volume = res[ 0 ];
 					// console.log( volume );
 					volume.should.have.property( "dam_id" );
-					damId = volume.dam_id;
+					volume.should.have.property( "fcbh_id" );
+					volume.should.have.property( "volume_name" );
+					volume.should.have.property( "language_family_code" ).that.is.equal( "ENG" );
+					volume.should.have.property( "language_iso" ).that.is.equal( "eng" );
+					volume.should.have.property( "resolution" ).that.is.instanceOf( Array );
+					volume.should.have.property( "delivery" ).that.is.instanceOf( Array );
+					done();
+				} );
+			} );
+
+			it( "volumeListing should get a volumen by dam_id", ( done ) => {
+				let options = { dam_id: DAM_ID };
+				client.volumeListing( options, ( err, res ) => {
+					should.not.exist( err );
+					should.exist( res );
+					// console.log( res );
+					res.should.be.instanceOf( Array );
+					res.length.should.be.equal( 1 );
+					// console.log( res.length );
+					// 24
+					let volume = res[ 0 ];
+					// console.log( volume );
+					volume.should.have.property( "dam_id" ).that.is.equal( DAM_ID );
 					volume.should.have.property( "fcbh_id" );
 					volume.should.have.property( "volume_name" );
 					volume.should.have.property( "language_family_code" ).that.is.equal( "ENG" );
@@ -82,15 +104,14 @@ describe( "Client Specs", () => {
 			} );
 
 			it( "bookListing should get a list of books by dam_id", ( done ) => {
-				should.exist( damId );
-				client.bookListing( damId, ( err, res ) => {
+				client.bookListing( DAM_ID, ( err, res ) => {
 					should.not.exist( err );
 					should.exist( res );
 					// console.log( res );
 					res.should.be.instanceOf( Array );
 					res.length.should.be.above( 0 );
 					let book = res[ 0 ];
-					book.should.have.property( "dam_id" ).that.is.equal( damId );
+					book.should.have.property( "dam_id" ).that.is.equal( DAM_ID );
 					book.should.have.property( "book_id" );
 					book.should.have.property( "book_name" );
 					book.should.have.property( "book_order" );
@@ -102,10 +123,9 @@ describe( "Client Specs", () => {
 			} );
 
 			it( "verse should get the text for a given book, chapter, and verse", ( done ) => {
-				should.exist( damId );
 				should.exist( bookId );
 				const options = { book_id: bookId, chapter_id: 1, verse_start: 1, verse_end: 1 };
-				client.verse( "ENGESVN2ET", options, ( err, res ) => {
+				client.verse( DAM_ID, options, ( err, res ) => {
 					should.not.exist( err );
 					should.exist( res );
 					// console.log( res );
