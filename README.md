@@ -1,4 +1,5 @@
 # digital-bible-platform
+
 JavaScript and Node.js client for the Digital Bible Platform [Digital Bible Platform](http://digitalbibleplatform.com/)
 
 The Digital Bible Platform is an online API for Bible Text, Audio, and Video. This client module for Node.js provides an easy-to-use set of functions designed to simplify the building of JavaScript applications that use the Digital Bible Platform.
@@ -20,8 +21,8 @@ npm install digital-bible-platform
 var Client = require( "digital-bible-platform" );
 var client = new Client( "your-api-key" );
 
-client.languageFamilies( function( err, languages ) {
-	console.log( languages );
+client.versions( function( err, versions ) {
+	console.log( versions );
 } );
 ```
 
