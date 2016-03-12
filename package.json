@@ -11,7 +11,10 @@
   "author": "David Neal <david@reverentgeek.com> (http://reverentgeek.com)",
   "license": "MIT",
   "dependencies": {
-    "request": "^2.69.0"
+    "reqwest": "^2.0.5"
+  },
+  "peerDependencies": {
+    "xhr2": "^0.1.3"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
