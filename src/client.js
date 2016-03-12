@@ -20,7 +20,7 @@ export default class Client {
 	}
 
 	_get( path, callback ) {
-		console.log( path );
+		// console.log( path );
 		this.client.get( path, ( err, res, body ) => {
 			callback( err, body );
 		} );

@@ -85,20 +85,16 @@ describe( "Client Specs", () => {
 				client.bookListing( damId, ( err, res ) => {
 					should.not.exist( err );
 					should.exist( res );
-					console.log( res );
-					// res.should.be.instanceOf( Array );
-					// res.length.should.be.above( 0 );
-					// console.log( res.length );
-					// 24
-					// let volume = res[ 0 ];
-					// console.log( volume );
-					// volume.should.have.property( "dam_id" );
-					// volume.should.have.property( "fcbh_id" );
-					// volume.should.have.property( "volume_name" );
-					// volume.should.have.property( "language_family_code" ).that.is.equal( "ENG" );
-					// volume.should.have.property( "language_iso" ).that.is.equal( "eng" );
-					// volume.should.have.property( "resolution" ).that.is.instanceOf( Array );
-					// volume.should.have.property( "delivery" ).that.is.instanceOf( Array );
+					// console.log( res );
+					res.should.be.instanceOf( Array );
+					res.length.should.be.above( 0 );
+					let book = res[ 0 ];
+					book.should.have.property( "dam_id" ).that.is.equal( damId );
+					book.should.have.property( "book_id" );
+					book.should.have.property( "book_name" );
+					book.should.have.property( "book_order" );
+					book.should.have.property( "number_of_chapters" );
+					book.should.have.property( "chapters" );
 					done();
 				} );
 			} );
