@@ -7,6 +7,7 @@ describe( "Client Specs", () => {
 	if ( runIntegrationSpecs ) {
 		describe( "Client Integration Specs", () => {
 			let client = {};
+			let damId = null;
 
 			before( () => {
 				client = new Client( apiKey );
@@ -68,12 +69,36 @@ describe( "Client Specs", () => {
 					let volume = res[ 0 ];
 					// console.log( volume );
 					volume.should.have.property( "dam_id" );
+					damId = volume.dam_id;
 					volume.should.have.property( "fcbh_id" );
 					volume.should.have.property( "volume_name" );
 					volume.should.have.property( "language_family_code" ).that.is.equal( "ENG" );
 					volume.should.have.property( "language_iso" ).that.is.equal( "eng" );
 					volume.should.have.property( "resolution" ).that.is.instanceOf( Array );
 					volume.should.have.property( "delivery" ).that.is.instanceOf( Array );
+					done();
+				} );
+			} );
+
+			it( "should get a list of books by dam_id", ( done ) => {
+				should.exist( damId );
+				client.bookListing( damId, ( err, res ) => {
+					should.not.exist( err );
+					should.exist( res );
+					console.log( res );
+					// res.should.be.instanceOf( Array );
+					// res.length.should.be.above( 0 );
+					// console.log( res.length );
+					// 24
+					// let volume = res[ 0 ];
+					// console.log( volume );
+					// volume.should.have.property( "dam_id" );
+					// volume.should.have.property( "fcbh_id" );
+					// volume.should.have.property( "volume_name" );
+					// volume.should.have.property( "language_family_code" ).that.is.equal( "ENG" );
+					// volume.should.have.property( "language_iso" ).that.is.equal( "eng" );
+					// volume.should.have.property( "resolution" ).that.is.instanceOf( Array );
+					// volume.should.have.property( "delivery" ).that.is.instanceOf( Array );
 					done();
 				} );
 			} );

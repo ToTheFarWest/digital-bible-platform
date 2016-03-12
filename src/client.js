@@ -20,6 +20,7 @@ export default class Client {
 	}
 
 	_get( path, callback ) {
+		console.log( path );
 		this.client.get( path, ( err, res, body ) => {
 			callback( err, body );
 		} );
@@ -46,6 +47,11 @@ export default class Client {
 		}
 		const params = optionsToParams( options, defaults );
 		const path = ( params.length === 0 ) ? "library/volume" : "library/volume?" + params.join( "&" );
+		this._get( path, callback );
+	}
+
+	bookListing( damId, callback ) {
+		const path = `library/book?dam_id=${damId}`;
 		this._get( path, callback );
 	}
 }
