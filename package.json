@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "babel --presets es2015 -d lib/ src/",
     "prepublish": "npm run compile",
-    "test": "npm run compile && mocha --compilers js:babel-core/register --reporter spec ./spec/*.spec.js"
+    "test": "npm run compile && nyc --require=babel-core/register mocha spec"
   },
   "author": "David Neal <david@reverentgeek.com> (http://reverentgeek.com)",
   "license": "MIT",
@@ -20,6 +20,7 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^5.2.0",
     "mocha": "^2.4.5",
+    "nyc": "^6.0.0",
     "sinon": "^1.17.3"
   }
 }
