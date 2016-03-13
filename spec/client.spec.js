@@ -1,4 +1,4 @@
-import Client from "../src/client";
+import Client from "../lib/client";
 
 describe( "Client Specs", function() {
 	this.timeout( 10000 );
