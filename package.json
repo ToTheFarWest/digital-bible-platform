@@ -1,6 +1,6 @@
 {
   "name": "digital-bible-platform",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "",
   "main": "lib/client.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "author": "David Neal <david@reverentgeek.com> (http://reverentgeek.com)",
   "license": "MIT",
   "dependencies": {
+    "reqwest": "^2.0.5"
   },
   "peerDependencies": {
   },
@@ -24,7 +25,6 @@
     "chai-as-promised": "^5.2.0",
     "mocha": "^2.4.5",
     "nyc": "^6.0.0",
-    "reqwest": "^2.0.5",
     "sinon": "^1.17.3",
     "webpack": "^1.12.14",
     "xhr2": "^0.1.3"
