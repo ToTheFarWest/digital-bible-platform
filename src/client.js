@@ -1,4 +1,4 @@
-const reqwest = require( "reqwest" );
+import reqwest from "reqwest";
 import { optionsToParams } from "./utils";
 
 export default class Client {
