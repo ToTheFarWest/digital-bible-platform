@@ -10,4 +10,4 @@ const optionsToParams = ( options, defaults ) => {
 	return params;
 };
 
-export { optionsToParams };
+exports.optionsToParams = optionsToParams;
