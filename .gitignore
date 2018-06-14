@@ -23,3 +23,6 @@ node_modules
 
 # code coverage output
 .nyc_output/
+
+#testing
+test.js
