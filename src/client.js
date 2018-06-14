@@ -60,11 +60,6 @@ class Client {
         return this._get(path);
     }
 
-    booksList (lang) {
-        const path = `library/bookname?language_code=${lang}`
-        return this._get(path);
-    }
-
     verses (damId, options) {
         const defaults = { book_id: "", chapter_id: "", verse_start: "", verse_end: "", markup: "" };
 
